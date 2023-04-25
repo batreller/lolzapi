@@ -33,9 +33,6 @@ class Client:
         self.xf_token = None
         self._cookie = cookie_string
 
-        self.user_id = None
-        self.user_name = None
-
         self.s = requests.session()
         self.s.headers["User-Agent"] = Params.USER_AGENT
         self.s.headers["Cookie"] = self._cookie
@@ -46,7 +43,7 @@ class Client:
             raise ValueError("Invalid cookie")
 
         self.user_name = re.findall(r'Im.username = \'(.*?)\'', response.text, re.DOTALL)[0]
-        self.user_id = re.findall(r'.chatBoxIngoreUser(.*?),', response.text, re.DOTALL)[0]
+        self.user_id = self.xf_token.split(',')[0]
 
     # returns your user
     def get_me(self, return_response: bool = False):
